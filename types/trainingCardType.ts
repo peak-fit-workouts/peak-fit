@@ -4,4 +4,7 @@ export type TrainingCardType = {
   description: string;
   createdOn: Date;
   imageUrl: string;
+  price: number;
+  trainingType: string;
+  level: string; 
 };

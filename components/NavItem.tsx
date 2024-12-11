@@ -21,8 +21,8 @@ const NavItem = ({ label, href }: NavItem) => {
       <Link
         href={href}
         className={`${
-          isActive ? "bg-bgColor-light" : ""
-        } px-4 py-2 text-white rounded-md hover:bg-bgColor-light transition-colors duration-200`}
+          isActive ? "bg-indigo-100 text-indigo-700" : "text-gray-800"
+        } px-4 py-2 rounded-md hover:bg-indigo-50 transition-colors duration-200 font-medium`}
       >
         {label}
       </Link>

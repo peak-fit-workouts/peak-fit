@@ -1,15 +1,20 @@
-import { Dispatch, SetStateAction, useRef, useState } from "react";
-import {
-  MagnifyingGlassCircleIcon,
-  XCircleIcon,
-} from "@heroicons/react/16/solid";
-import SearchBarChip from "./searchBarChip";
+import { Dispatch, SetStateAction, useRef } from "react";
 
 type SearchBarProps = {
   searchValue: string;
   setSearchValue: Dispatch<SetStateAction<string>>;
   sortValue: string;
   setSortValue: Dispatch<SetStateAction<string>>;
+  selectedTrainingType: string;
+  setSelectedTrainingType: Dispatch<SetStateAction<string>>;
+  minPrice: number;
+  setMinPrice: Dispatch<SetStateAction<number>>;
+  maxPrice: number;
+  setMaxPrice: Dispatch<SetStateAction<number>>;
+  dateSortOrder: string;
+  setDateSortOrder: Dispatch<SetStateAction<string>>;
+  selectedLevel: string;
+  setSelectedLevel: Dispatch<SetStateAction<string>>;
 };
 
 const SearchBar = ({
@@ -17,21 +22,59 @@ const SearchBar = ({
   setSearchValue,
   sortValue,
   setSortValue,
+  selectedTrainingType,
+  setSelectedTrainingType,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  dateSortOrder,
+  setDateSortOrder,
+  selectedLevel,
+  setSelectedLevel,
 }: SearchBarProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const searchHandler = () => {
-    const val = inputRef?.current?.value ? inputRef?.current.value : "";
+    const val = inputRef?.current?.value ? inputRef.current.value : "";
     setSearchValue(val);
   };
 
+  const trainingTypes = [
+    "All",
+    "Strength Training",
+    "HIIT",
+    "Cardio",
+    "Yoga",
+    "Pilates",
+    "Functional Training",
+    "CrossFit",
+    "Calisthenics",
+    "Free-Weight Training",
+    "Machine-Based",
+    "Circuit Training",
+    "Plyometric Training",
+    "Tai Chi",
+    "Kickboxing Aerobics",
+    "Zumba",
+    "Spinning",
+    "Stretching",
+    "Barre",
+    "Martial Arts",
+    "Swimming",
+    "Other",
+  ];
+
+  const levels = ["Beginner", "Intermediate", "Advanced"]; // Ново
+
   return (
-    <div className="flex flex-col items-center justify-center text-textColor text-xs mt-10">
-      <div className="flex gap-1 justify-center">
+    <div className="w-full px-6 py-4 bg-white border border-slate-300 rounded-xl shadow-md flex flex-wrap gap-4 items-center">
+      {/* Search Field */}
+      <div className="flex items-center gap-2 flex-grow">
         <input
           type="text"
           placeholder="Search..."
-          className="w-3/4 h-12 px-4 bg-bgColor rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-200 border border-bgColor-dark hover:border hover:border-blue-200"
+          className="w-full py-2 px-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-200 transition duration-150 ease-in-out"
           ref={inputRef}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -40,14 +83,14 @@ const SearchBar = ({
           }}
         />
         <button
-          className="bg-bgColor rounded-lg flex justify-center items-center p-3 hover:bg-blue-200 hover:text-gray-900 duration-300"
+          className="py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-150 ease-in-out"
           onClick={searchHandler}
         >
-          <MagnifyingGlassCircleIcon className="h-6 w-6 " />
+          Search
         </button>
         {searchValue && (
           <button
-            className="bg-bgColor text-red-500 rounded-lg flex justify-center items-center p-3 hover:bg-red-500 hover:text-gray-900 duration-300"
+            className="py-2 px-4 bg-white border border-red-500 text-red-500 font-semibold rounded-md hover:bg-red-100 transition duration-150 ease-in-out"
             onClick={() => {
               if (inputRef.current) {
                 inputRef.current.value = "";
@@ -55,33 +98,92 @@ const SearchBar = ({
               setSearchValue("");
             }}
           >
-            <XCircleIcon className="h-6 w-6 " />
+            Clear
           </button>
         )}
       </div>
-      <div className="flex gap-5 pt-3 ">
-        <SearchBarChip
-          label="All"
-          selected={sortValue}
-          setSelected={setSortValue}
-          setSearchValue={setSearchValue}
-          searchRef={inputRef}
-        />
-        <SearchBarChip
-          label="Featured"
-          selected={sortValue}
-          setSelected={setSortValue}
-        />
-        <SearchBarChip
-          label="Trending"
-          selected={sortValue}
-          setSelected={setSortValue}
-        />
-        <SearchBarChip
-          label="Market cap"
-          selected={sortValue}
-          setSelected={setSortValue}
-        />
+
+      {/* Training Type Filter */}
+      <div className="flex items-center gap-2">
+        <label className="font-semibold text-sm">Type:</label>
+        <select
+          value={selectedTrainingType}
+          onChange={(e) => setSelectedTrainingType(e.target.value)}
+          className="py-2 px-3 border border-slate-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-indigo-200 text-sm"
+        >
+          {trainingTypes.map((type) => (
+            <option key={type} value={type === "All" ? "" : type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Level Filter */}
+      <div className="flex items-center gap-2">
+        <label className="font-semibold text-sm">Level:</label>
+        <select
+          value={selectedLevel}
+          onChange={(e) => setSelectedLevel(e.target.value)}
+          className="py-2 px-3 border border-slate-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-indigo-200 text-sm"
+        >
+          <option value="">All</option>
+          {levels.map((lvl) => (
+            <option key={lvl} value={lvl}>
+              {lvl}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Price Range */}
+      <div className="flex items-center gap-2">
+        <label className="font-semibold text-sm whitespace-nowrap">
+          Price: {minPrice} - {maxPrice}
+        </label>
+        <div className="flex items-center gap-2">
+          <div className="flex flex-col items-center text-xs">
+            <span>Min: {minPrice}</span>
+            <input
+              type="range"
+              min={0}
+              max={1000}
+              value={minPrice}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                if (val <= maxPrice) setMinPrice(val);
+              }}
+              className="w-24 cursor-pointer"
+            />
+          </div>
+          <div className="flex flex-col items-center text-xs">
+            <span>Max: {maxPrice}</span>
+            <input
+              type="range"
+              min={0}
+              max={1000}
+              value={maxPrice}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                if (val >= minPrice) setMaxPrice(val);
+              }}
+              className="w-24 cursor-pointer"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Date Sort Order */}
+      <div className="flex items-center gap-2">
+        <label className="font-semibold text-sm">Date:</label>
+        <select
+          value={dateSortOrder}
+          onChange={(e) => setDateSortOrder(e.target.value)}
+          className="py-2 px-3 border border-slate-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-indigo-200 text-sm"
+        >
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
       </div>
     </div>
   );

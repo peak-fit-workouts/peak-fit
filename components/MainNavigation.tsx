@@ -7,39 +7,30 @@ const MainNavigation = () => {
 
   return (
     <>
-      <nav className="hidden md:flex justify-between max-w-full mx-auto pt-1 relative z-50">
-        <div className="w-10/12 m-auto flex justify-between items-center bg-bgColor px-6 py-3 rounded-lg shadow-lg">
-          <div className="text-base font-semibold">
-            {/* <img className="h-12 w-auto -my-2" src={logo.src} /> */}
-          </div>
-          <ul className="flex flex-1 justify-center items-center gap-2">
-            <NavItem href="/" label="Home" />
-            <NavItem href="/create" label="Create Training" />
-          </ul>
-        </div>
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex justify-between max-w-full mx-auto p-4 bg-white/80 backdrop-blur-sm shadow-md items-center rounded-b-xl relative z-50">
+        <div className="text-lg font-bold text-slate-800">My Trainings</div>
+        <ul className="flex space-x-6">
+          <NavItem href="/" label="Home" />
+          <NavItem href="/create" label="Create Training" />
+        </ul>
       </nav>
 
-      <nav className="md:hidden bg-black p-2">
+      {/* Mobile Navigation */}
+      <nav className="md:hidden bg-white/90 p-2 shadow-sm backdrop-blur-sm rounded-b-xl relative z-50">
         <div className="flex justify-between items-center">
-          <div className="text-base font-semibold">
-            {/* <img className="h-10 w-auto" src={logo.src} alt="Logo" /> */}
-          </div>
+          <div className="text-base font-bold text-slate-800">Menu</div>
           <button
-            className="text-gray-300 focus:outline-none"
+            className="text-slate-600 focus:outline-none"
             onClick={() => setToggleMenu((prev) => !prev)}
           >
-            {/* Burger icon */}
-            <Bars3Icon className="h-6 w-6 text-white" />
+            <Bars3Icon className="h-6 w-6" />
           </button>
         </div>
         {toggleMenu && (
-          <ul className="flex flex-col items-center justify-center text-center gap-3 mt-4">
-            <li className="list-none">
-              <NavItem href="/" label="Home" />
-            </li>
-            <li className="list-none">
-              <NavItem href="/create" label="Create Training" />
-            </li>
+          <ul className="flex flex-col space-y-3 mt-4">
+            <NavItem href="/" label="Home" />
+            <NavItem href="/create" label="Create Training" />
           </ul>
         )}
       </nav>

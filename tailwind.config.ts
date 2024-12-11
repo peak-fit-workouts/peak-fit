@@ -1,11 +1,9 @@
 import type { Config } from "tailwindcss";
-
 const { nextui } = require("@nextui-org/react");
 
 export default {
   content: [
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/components/slider.js",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,17 +12,19 @@ export default {
     extend: {
       colors: {
         bgColor: {
-          light: "#e1c8a5",
-          DEFAULT: "#D4B17E",
+          light: "#f7f2e9",
+          DEFAULT: "#d4b17e",
           dark: "#947c58",
         },
         textColor: {
-          DEFAULT: "#fff",
+          DEFAULT: "#1f1f1f",
         },
       },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      }
     },
   },
-
   darkMode: "class",
   plugins: [nextui()],
 } satisfies Config;
