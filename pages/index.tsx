@@ -1,32 +1,38 @@
+
 import SearchBar from "@/components/SearchBar";
 import TrainingCards from "@/components/TrainingCards";
+import { useState, useEffect, useContext } from "react";
 import TrainingsContext from "@/context/trainingsContext";
-import { useContext, useState } from "react";
 
-const HomePage = () => {
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3000/api/trainings");
+  const initialTrainings = await res.json();
+  return { props: { initialTrainings } };
+}
+
+const HomePage = ({ initialTrainings }: { initialTrainings: any[] }) => {
+  const { trainings, setTrainings } = useContext(TrainingsContext);
+
+  useEffect(() => {
+    
+    setTrainings(initialTrainings.map(t => ({ ...t, createdOn: new Date(t.createdOn) })));
+  }, [initialTrainings, setTrainings]);
+
   const [searchValue, setSearchValue] = useState("");
   const [sortValue, setSortValue] = useState("All");
   const [selectedTrainingType, setSelectedTrainingType] = useState("");
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(1000);
   const [dateSortOrder, setDateSortOrder] = useState<string>("newest");
-  const [selectedLevel, setSelectedLevel] = useState<string>("");
-
-  const { trainings } = useContext(TrainingsContext);
 
   let filteredTrainings = trainings.filter((t) => {
     const matchesSearch = searchValue
-      ? t.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-        t.description.toLowerCase().includes(searchValue.toLowerCase())
+      ? t.name.toLowerCase().includes(searchValue.toLowerCase()) || t.description.toLowerCase().includes(searchValue.toLowerCase())
       : true;
-
-    const matchesType = selectedTrainingType
-      ? t.trainingType === selectedTrainingType
-      : true;
+    const matchesType = selectedTrainingType ? t.trainingType === selectedTrainingType : true;
     const matchesPrice = t.price >= minPrice && t.price <= maxPrice;
-    const matchesLevel = selectedLevel ? t.level === selectedLevel : true;
 
-    return matchesSearch && matchesType && matchesPrice && matchesLevel;
+    return matchesSearch && matchesType && matchesPrice;
   });
 
   filteredTrainings = filteredTrainings.sort((a, b) => {
@@ -52,8 +58,8 @@ const HomePage = () => {
         setMaxPrice={setMaxPrice}
         dateSortOrder={dateSortOrder}
         setDateSortOrder={setDateSortOrder}
-        selectedLevel={selectedLevel}
-        setSelectedLevel={setSelectedLevel}
+        selectedLevel=""
+        setSelectedLevel={() => {}}
       />
       {filteredTrainings && (
         <TrainingCards

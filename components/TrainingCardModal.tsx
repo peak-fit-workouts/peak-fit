@@ -16,7 +16,7 @@ const TrainingCardModal = () => {
   return (
     <Modal
       isOpen={modalData.isOpen}
-      onClose={() => setModalData((prev) => ({ ...prev, isOpen: false }))} // Close modal on dismiss
+      onClose={() => setModalData((prev) => ({ ...prev, isOpen: false }))} 
       isDismissable={false}
       isKeyboardDismissDisabled={true}
       hideCloseButton={true}

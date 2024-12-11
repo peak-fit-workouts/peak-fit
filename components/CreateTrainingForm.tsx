@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import ImageUpload from "./ImageUpload";
-import TrainingsContext from "@/context/trainingsContext";
-import { TrainingCardType } from "@/types/trainingCardType";
+import { useRouter } from "next/router";
 import ImagePreview from "./ImagePreview";
 import InfoModalContext from "@/context/infoModalContext";
-import { useRouter } from "next/router";
+import { useContext } from "react";
 
 const CreateTrainingForm = () => {
   const [name, setName] = useState("");
@@ -41,39 +40,41 @@ const CreateTrainingForm = () => {
   ];
 
   const router = useRouter();
-  const { trainings, setTrainings } = useContext(TrainingsContext);
   const { setModalData } = useContext(InfoModalContext);
 
-  const existingTypes = Array.from(new Set(trainings.map((t) => t.trainingType)));
-  const allTypes = Array.from(new Set([...trainingTypes, ...existingTypes]));
-
-  const submitHandler = (e: any) => {
+  const submitHandler = async (e: any) => {
     e.preventDefault();
 
     if (!name || !description || !imageUrl || !trainingType || !level || price <= 0) {
-      setModalData({ isOpen: true, message: "Please fill all the fields and price > 0" });
+      setModalData({ isOpen: true, message: "Моля, попълнете всички полета и уверете се, че цената е по-голяма от 0." });
       return;
     }
 
-    setTrainings((prevTrainings: TrainingCardType[]) => [
-      ...prevTrainings,
-      {
-        id: `${name}-${description}`,
-        name,
-        description,
-        createdOn: new Date(),
-        imageUrl,
-        price,
-        trainingType,
-        level,
-      },
-    ]);
+    try {
+      const response = await fetch("/api/trainings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, description, imageUrl, price, trainingType, level }),
+      });
 
-    router.push("/");
+      if (!response.ok) {
+        const { error } = await response.json();
+        setModalData({ isOpen: true, message: error || "Грешка при създаване на тренировка." });
+        return;
+      }
+
+    
+      router.push("/");
+    } catch (error: any) {
+      console.error(error);
+      setModalData({ isOpen: true, message: "Неуспешно създаване на тренировка." });
+    }
   };
 
   return (
-    <form className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-xl space-y-6">
+    <form className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-xl space-y-6" onSubmit={submitHandler}>
       <div>
         <label htmlFor="TrainingName" className="block text-sm font-semibold text-slate-700 mb-2">
           Name
@@ -104,7 +105,9 @@ const CreateTrainingForm = () => {
       </div>
 
       <div>
-        <label htmlFor="trainingPrice" className="block text-sm font-semibold text-slate-700 mb-2">Price</label>
+        <label htmlFor="trainingPrice" className="block text-sm font-semibold text-slate-700 mb-2">
+          Price
+        </label>
         <input
           type="number"
           id="trainingPrice"
@@ -129,8 +132,8 @@ const CreateTrainingForm = () => {
           onChange={(e) => setTrainingType(e.target.value)}
         >
           <option value="">Select a type</option>
-          {allTypes.map((type) => (
-            <option key={type} value={type === "All" ? "" : type}>
+          {trainingTypes.map((type) => (
+            <option key={type} value={type === "All" ? "Other" : type}>
               {type}
             </option>
           ))}
@@ -164,7 +167,6 @@ const CreateTrainingForm = () => {
         <button
           type="submit"
           className="w-full py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition duration-150 ease-in-out"
-          onClick={submitHandler}
         >
           Create
         </button>

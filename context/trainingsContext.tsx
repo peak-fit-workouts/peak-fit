@@ -1,19 +1,19 @@
 import { TrainingCardType } from "@/types/trainingCardType";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useState, ReactNode } from "react";
 
 type TrainingsContextType = {
   trainings: TrainingCardType[];
   setTrainings: Dispatch<SetStateAction<TrainingCardType[]>>;
 };
 
-const initialState = {
+const initialState: TrainingsContextType = {
   trainings: [],
   setTrainings: () => {},
 };
 
 const TrainingsContext = createContext<TrainingsContextType>(initialState);
 
-export const TrainingsContextProvider = ({ children }: { children: any }) => {
+export const TrainingsContextProvider = ({ children }: { children: ReactNode }) => {
   const [trainings, setTrainings] = useState<TrainingCardType[]>([]);
 
   return (
