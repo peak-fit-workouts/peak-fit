@@ -1,7 +1,6 @@
-import { Cabin, Press_Start_2P } from "next/font/google";
+import { Cabin } from "next/font/google";
 
 import { useRouter } from "next/router";
-import Image from "next/image";
 import MainNavigation from "./MainNavigation";
 
 interface LayoutProps {
@@ -14,10 +13,9 @@ const font = Cabin({
 
 const Layout = ({ children }: LayoutProps) => {
   const router = useRouter();
-  const pathname = router.pathname;
 
   return (
-    <div className={`${font.className} relative z-10  bg-bgColor-light`}>
+    <div className={`${font.className} relative z-10 bg-gradient-to-b from-bgColor-light via-bgColor to-bgColor-dark`}>
       <MainNavigation />
       <main className="max-w-full mx-auto z-50 relative">
         <div className="min-h-screen max-w-[80%] m-auto">{children}</div>

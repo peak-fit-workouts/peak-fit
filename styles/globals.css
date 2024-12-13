@@ -7,29 +7,25 @@
   --foreground: #1f1f1f;
 }
 
-/* Обща тема - светъл фон, тъмен текст */
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom, #e1c8a5, #947c58);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Скрол бар */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
+  width: 10px; 
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #ffffff;
-  border-radius: 100px;
+  background: transparent; 
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #947c58;
-  border-radius: 100px;
+  background: #6366F1;
+  border-radius: 100px; 
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #947c58;
-  border-radius: 100px;
+  background: #4F46E5; 
 }

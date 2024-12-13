@@ -65,10 +65,10 @@ const SearchBar = ({
     "Other",
   ];
 
-  const levels = ["Beginner", "Intermediate", "Advanced"]; // Ново
+  const levels = ["Beginner", "Intermediate", "Advanced"];
 
   return (
-    <div className="w-full px-6 py-4 bg-white border border-slate-300 rounded-xl shadow-md flex flex-wrap gap-4 items-center">
+    <div className="w-full px-6 py-4 bg-gradient-to-r from-bgColor-light via-bgColor to-bgColor-dark border border-slate-200 rounded-xl shadow-md flex flex-wrap gap-4 items-center">
       {/* Search Field */}
       <div className="flex items-center gap-2 flex-grow">
         <input
@@ -83,14 +83,14 @@ const SearchBar = ({
           }}
         />
         <button
-          className="py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-150 ease-in-out"
+          className="py-2 px-4 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600 transition duration-150 ease-in-out"
           onClick={searchHandler}
         >
           Search
         </button>
         {searchValue && (
           <button
-            className="py-2 px-4 bg-white border border-red-500 text-red-500 font-semibold rounded-md hover:bg-red-100 transition duration-150 ease-in-out"
+            className="py-2 px-4 bg-white border border-red-400 text-red-500 font-semibold rounded-md hover:bg-red-100 transition duration-150 ease-in-out"
             onClick={() => {
               if (inputRef.current) {
                 inputRef.current.value = "";
@@ -105,7 +105,7 @@ const SearchBar = ({
 
       {/* Training Type Filter */}
       <div className="flex items-center gap-2">
-        <label className="font-semibold text-sm">Type:</label>
+        <label className="font-semibold text-sm text-slate-800">Type:</label>
         <select
           value={selectedTrainingType}
           onChange={(e) => setSelectedTrainingType(e.target.value)}
@@ -121,7 +121,7 @@ const SearchBar = ({
 
       {/* Level Filter */}
       <div className="flex items-center gap-2">
-        <label className="font-semibold text-sm">Level:</label>
+        <label className="font-semibold text-sm text-slate-800">Level:</label>
         <select
           value={selectedLevel}
           onChange={(e) => setSelectedLevel(e.target.value)}
@@ -138,7 +138,7 @@ const SearchBar = ({
 
       {/* Price Range */}
       <div className="flex items-center gap-2">
-        <label className="font-semibold text-sm whitespace-nowrap">
+        <label className="font-semibold text-sm text-slate-800 whitespace-nowrap">
           Price: {minPrice} - {maxPrice}
         </label>
         <div className="flex items-center gap-2">
@@ -175,7 +175,7 @@ const SearchBar = ({
 
       {/* Date Sort Order */}
       <div className="flex items-center gap-2">
-        <label className="font-semibold text-sm">Date:</label>
+        <label className="font-semibold text-sm text-slate-800">Date:</label>
         <select
           value={dateSortOrder}
           onChange={(e) => setDateSortOrder(e.target.value)}

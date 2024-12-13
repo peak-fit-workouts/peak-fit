@@ -9,6 +9,7 @@ type TrainingCardProps = {
   image: string;
   logo?: string;
   createdAt: Date;
+  price: number; // Добавено поле за цената
 };
 
 const TrainingCard = ({
@@ -16,6 +17,7 @@ const TrainingCard = ({
   image,
   description,
   createdAt,
+  price, // Вземаме цената като проп
 }: TrainingCardProps) => {
   const { setModalData } = useContext(TrainingCardModalContext);
 
@@ -51,9 +53,11 @@ const TrainingCard = ({
           <p className="text-sm mb-1">
             Created: {displaySmartDate(createdAt, formatSimpleDate)}
           </p>
-          <p className="text-sm">
+          <p className="text-sm mb-1">
             {description.length < 20 ? description : `${description.slice(0, 20)}...`}
           </p>
+          {/* Показване на цената */}
+          <p className="text-sm font-bold text-indigo-600">Price: ${price}</p>
         </div>
       </div>
     </div>

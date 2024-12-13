@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+
 const { nextui } = require("@nextui-org/react");
 
 export default {
@@ -12,12 +13,12 @@ export default {
     extend: {
       colors: {
         bgColor: {
-          light: "#f7f2e9",
-          DEFAULT: "#d4b17e",
-          dark: "#947c58",
+          light: "#D9EAFB", 
+          DEFAULT: "#B2C7E8", 
+          dark: "#94AFC7", 
         },
         textColor: {
-          DEFAULT: "#1f1f1f",
+          DEFAULT: "#2C3E50", 
         },
       },
       fontFamily: {

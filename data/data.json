@@ -108,5 +108,15 @@
     "price": 20,
     "trainingType": "Circuit Training",
     "level": "Beginner"
+  },
+  {
+    "id": "Tai Chi Workout_1734074703440",
+    "name": "Tai Chi Workout",
+    "description": "Tai Chi Workout",
+    "createdOn": "2024-12-13T07:25:03.440Z",
+    "imageUrl": "https://res.cloudinary.com/dmkprwzyp/image/upload/v1734074702/l2qjh6huklvtdjpc2lth.jpg",
+    "price": 20,
+    "trainingType": "Tai Chi",
+    "level": "Beginner"
   }
 ]
