@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import ImageUpload from "./ImageUpload";
 import { useRouter } from "next/router";
 import ImagePreview from "./ImagePreview";
-import InfoModalContext from "@/context/infoModalContext";
+import InfoModalContext from "@/context/InfoModalContext";
 
 const CreateTrainingForm = () => {
   const [name, setName] = useState("");
@@ -72,7 +72,8 @@ const CreateTrainingForm = () => {
   };
 
   return (
-    <form className="max-w-md mx-auto mt-10 p-6 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-xl shadow-md space-y-6" onSubmit={submitHandler}>
+    <form className="max-w-md mx-auto mt-10 p-6 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-xl shadow-md space-y-6" 
+    onSubmit={submitHandler}>
       <div>
         <label htmlFor="TrainingName" className="block text-sm font-semibold text-gray-800 mb-2">
           Name

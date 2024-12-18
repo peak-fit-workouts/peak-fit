@@ -1,4 +1,4 @@
-import InfoModalContext from "@/context/infoModalContext";
+import InfoModalContext from "@/context/InfoModalContext";
 import {
   Modal,
   ModalContent,
