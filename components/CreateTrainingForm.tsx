@@ -45,7 +45,7 @@ const CreateTrainingForm = () => {
     e.preventDefault();
 
     if (!name || !description || !imageUrl || !trainingType || !level || price <= 0) {
-      setModalData({ isOpen: true, message: "Моля, попълнете всички полета и уверете се, че цената е по-голяма от 0." });
+      setModalData({ isOpen: true, message: "Please fill all the fields" });
       return;
     }
 
@@ -60,14 +60,14 @@ const CreateTrainingForm = () => {
 
       if (!response.ok) {
         const { error } = await response.json();
-        setModalData({ isOpen: true, message: error || "Грешка при създаване на тренировка." });
+        setModalData({ isOpen: true, message: error || "Something went wrong" });
         return;
       }
 
       router.push("/");
     } catch (error) {
       console.error(error);
-      setModalData({ isOpen: true, message: "Неуспешно създаване на тренировка." });
+      setModalData({ isOpen: true, message: "Something went wrong" });
     }
   };
 
